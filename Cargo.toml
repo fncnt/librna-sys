@@ -1,0 +1,29 @@
+[package]
+name = "librna-sys"
+authors = ["Vincent Messow <contact@vncnt.eu>"]
+links = "RNA"
+repository = "https://github.com/fncnt/librna-sys"
+readme = "README.md"
+license = "GPL3"
+description = "Bindings for libRNA (RNAlib of viennaRNA) with support for linux.\n\n See rna-rs for a safe Rust wrapper."
+include = ["src/*", "Cargo.toml", "README.md", "COPYING"]
+keywords = ["viennarna", "rna", "bioinformatics", "sys"]
+categories = ["api-bindings", "external-ffi-bindings", "science"]
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+doctest = false
+crate-type = ["lib"]
+
+[build-dependencies]
+bindgen = "0.54.1"
+pkg-config = { optional = true, version = "0.3.18" }
+
+[dependencies]
+
+[features]
+default = []
+dynamic = ["pkg-config"]
+static = []
+static-fallback = []
