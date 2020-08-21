@@ -1,6 +1,7 @@
 [package]
 name = "librna-sys"
 authors = ["Vincent Messow <contact@vncnt.eu>"]
+build = "build.rs"
 links = "RNA"
 repository = "https://github.com/fncnt/librna-sys"
 readme = "README.md"
