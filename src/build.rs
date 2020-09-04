@@ -1,9 +1,9 @@
 extern crate bindgen;
-#[cfg(feature = "dynamic")]
+#[cfg(feature = "auto")]
 extern crate pkg_config;
 
 use std::env;
-use std::env::consts;
+//use std::env::consts;
 use std::path::Path;
 use std::path::PathBuf;
 use std::collections::HashSet;
@@ -28,13 +28,11 @@ fn main() {
 
     if let Some(lib_dir) = env::var_os("LIBRNA_LIB_DIR") {
         let lib_dir = Path::new(&lib_dir);
-        let dylib_name = format!("{}RNA{}", consts::DLL_PREFIX, consts::DLL_SUFFIX);
-        if lib_dir.join(dylib_name).exists() ||
-           lib_dir.join("libRNA.a").exists() ||
-           lib_dir.join("RNA.lib").exists() {
+
+        if lib_dir.join("libRNA.a").exists() {
             println!("cargo:rustc-link-search=native={}", lib_dir.display());
-            println!("cargo:rustc-link-lib=RNA");
-            return;
+            //println!("cargo:rustc-link-lib=RNA");
+            //return;
            }
     }
 
@@ -49,10 +47,7 @@ fn main() {
             .into_iter()
             .collect(),
         );
-    // Tell cargo to tell rustc to link the system RNA
-    // shared library.
-    // Not sure about this though. Shouldn't this only be needed for dynamic linking?
-    // Need to learn more about pkg-config
+    // Tell cargo to tell rustc to link the system RNA library.
     println!("cargo:rustc-link-lib=RNA");
 
     // Tell cargo to invalidate the built crate whenever the wrapper changes
@@ -82,13 +77,12 @@ fn main() {
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Couldn't write bindings!");
 
-    let requires_static_only = cfg!(feature = "static") || env::var("LIBRNA_STATIC").is_ok();
-    if requires_static_only || (!configure_pkg_config() && cfg!(feature = "static-fallback")) {
-        compile_static();
+    if !configure_pkg_config() {
+        return
     }
 }
 
-#[cfg(feature = "dynamic")]
+#[cfg(feature = "auto")]
 fn configure_pkg_config() -> bool {
     // For some reason, the viennaRNA people decided to call the config file "RNAlib2.pc"
     // which is kind of consistent with the inconsistent library name itself
@@ -106,18 +100,7 @@ fn configure_pkg_config() -> bool {
     }
 }
 
-#[cfg(not(feature = "dynamic"))]
+#[cfg(not(feature = "auto"))]
 fn configure_pkg_config() -> bool {
     false
-}
-
-#[cfg(not(any(feature = "static", feature = "static-fallback")))]
-fn compile_static() {
-    println!("cargo:warning='static' feature of librna-sys is disabled, so this library won't be build, and probably won't work at all.");
-    println!("cargo:rustc-link-lib=RNA");
-}
-
-#[cfg(any(feature = "static", feature = "static-fallback"))]
-fn compile_static() {
-    println!("cargo:warning=Linking statically is not yet implemented.");
 }

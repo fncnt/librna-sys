@@ -25,6 +25,5 @@ pkg-config = { optional = true, version = "0.3.18" }
 
 [features]
 default = []
-dynamic = ["pkg-config"]
-static = []
+auto = ["pkg-config"]
 static-fallback = []
