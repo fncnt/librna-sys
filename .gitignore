@@ -1,2 +1,5 @@
 target/
 Cargo.lock
+headerfiles.txt
+src/meson.build
+meson.build
