@@ -3,7 +3,6 @@ extern crate bindgen;
 extern crate pkg_config;
 
 use std::env;
-//use std::env::consts;
 use std::path::Path;
 use std::path::PathBuf;
 use std::collections::HashSet;
@@ -31,8 +30,6 @@ fn main() {
 
         if lib_dir.join("libRNA.a").exists() {
             println!("cargo:rustc-link-search=native={}", lib_dir.display());
-            //println!("cargo:rustc-link-lib=RNA");
-            //return;
            }
     }
 
@@ -94,7 +91,8 @@ fn configure_pkg_config() -> bool {
             true
         },
         Err(err) => {
-            println!("cargo:warning=pkg_config failed ({}). Falling back to static build.", err);
+            println!("cargo:warning=pkg_config failed ({}).", err);
+            println!("cargo:warning=Consider setting LIBRNA_INCLUDE_DIR/LIBRNA_LIB_DIR instead.");
             false
         }
     }
@@ -104,3 +102,4 @@ fn configure_pkg_config() -> bool {
 fn configure_pkg_config() -> bool {
     false
 }
+

@@ -20,10 +20,11 @@ crate-type = ["lib"]
 [build-dependencies]
 bindgen = "0.55.1"
 pkg-config = { optional = true, version = "0.3.18" }
+git2 = {optional = true, version = "0.13.10"}
 
 [dependencies]
 
 [features]
 default = []
 auto = ["pkg-config"]
-static-fallback = []
+download = ["git2"]

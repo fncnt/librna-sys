@@ -6,9 +6,22 @@ This crate provides low-level C bindings to [`libRNA/RNAlib/viennaRNA`](https://
 
 `librna-sys` is **highly experimental**.
 It's possible building or linking does not work reliably. 
-Also, currently, explicitly linking statically is not supported.
 
 See [`librna-rs`](https://github.com/fncnt/librna-rs) for equally experimental safe Rust bindings.
+
+## Configuration
+
+Use
+
+```
+cargo build --features auto
+```
+
+to let `pkg-config` search for the library and header files.
+By default this feature is disabled and the build script uses the default system `lib` and `include` directories.
+
+If you've built `libRNA.a` manually in a local directory, 
+set `LIBRNA_INCLUDE_DIR` and `LIBRNA_LIB_DIR` to override these directories.
 
 ## Contributing
 
