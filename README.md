@@ -30,6 +30,7 @@ If you know better and have any kind of good advice, feel free to let me know!
 
 ### TODO
 * [ ] Tests (manually and/or using `ctest`)
-* [ ] Fallback mode when building (using `git2-rs` to download ViennaRNA or using a submodule)
+* [ ] Fallback mode when building (using `git2-rs` to download ViennaRNA **or** using a submodule)
+* [ ] pre-generate bindings using bindgen CLI
 * [ ] Publish crate
 * [ ] Publish `librna-rs` on Github and link to it.
