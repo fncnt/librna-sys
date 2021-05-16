@@ -9,7 +9,6 @@ documentation = "https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/index.html"
 readme = "README.md"
 license = "MIT"
 description = "Low-level bindings for libRNA of viennaRNA with support for linux."
-include = ["src/*", "Cargo.toml", "README.md", "COPYING"]
 keywords = ["viennarna", "rna", "bioinformatics", "sys", "ffi"]
 categories = ["external-ffi-bindings", "science"]
 version = "0.1.0"
