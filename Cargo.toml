@@ -18,8 +18,8 @@ doctest = false
 crate-type = ["lib"]
 
 [build-dependencies]
-bindgen = "0.55.1"
-pkg-config = { optional = true, version = "0.3.18" }
+bindgen = "0.58.1"
+pkg-config = { optional = true, version = "0.3.19" }
 
 [dependencies]
 
