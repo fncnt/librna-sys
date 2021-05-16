@@ -21,17 +21,33 @@ impl bindgen::callbacks::ParseCallbacks for IgnoreMacros {
 }
 
 fn main() {
-    if let Ok(include_dir) = env::var("LIBRNA_INCLUDE_DIR") {
-        println!("cargo:include={}", include_dir);
+    if !configure_pkg_config() {
+        if let Ok(include_dir) = env::var("LIBRNA_INCLUDE_DIR") {
+            println!("cargo:include={}", include_dir);
+        } else {
+            println!("cargo:warning=LIBRNA_INCLUDE_DIR not set.");
+            println!("cargo:warning=Using LIBRNA_INCLUDE_DIR=/usr/include as default.");
+
+            println!("cargo:include=/usr/include");
+        }
+
+        if let Ok(lib_dir) = env::var("LIBRNA_LIB_DIR") {
+            let lib_dir = Path::new(&lib_dir);
+
+            if lib_dir.join("libRNA.a").exists() {
+                println!("cargo:rustc-link-search=native={}", lib_dir.display());
+            } else {
+                println!("cargo:warning=libRNA.a not found!");
+                println!("cargo:warning=Fallback mode for locally building libRNA.a is not yet implemented.");
+            }
+        } else {
+            println!("cargo:warning=LIBRNA_LIB_DIR not set.");
+            println!("cargo:warning=Using LIBRNA_LIB_DIR=/usr/lib as default.");
+
+            println!("cargo:rustc-link-search=native=/usr/lib");
+        }
     }
 
-    if let Some(lib_dir) = env::var_os("LIBRNA_LIB_DIR") {
-        let lib_dir = Path::new(&lib_dir);
-
-        if lib_dir.join("libRNA.a").exists() {
-            println!("cargo:rustc-link-search=native={}", lib_dir.display());
-           }
-    }
 
     let ignored_macros = IgnoreMacros(
             vec![
@@ -45,7 +61,7 @@ fn main() {
             .collect(),
         );
     // Tell cargo to tell rustc to link the system RNA library.
-    println!("cargo:rustc-link-lib=RNA");
+    println!("cargo:rustc-link-lib=static=RNA");
 
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=src/wrapper.h");
@@ -74,19 +90,18 @@ fn main() {
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Couldn't write bindings!");
 
-    if !configure_pkg_config() {
-        return
-    }
 }
 
 #[cfg(feature = "auto")]
 fn configure_pkg_config() -> bool {
-    // For some reason, the viennaRNA people decided to call the config file "RNAlib2.pc"
-    // which is kind of consistent with the inconsistent library name itself
     match pkg_config::probe_library("RNAlib2") {
         Ok(info) => {
+            // println!("cargo:warning=pkg_config probing successful.");
             for path in info.include_paths {
                 println!("cargo:include={}", path.display());
+            }
+            for path in info.link_paths {
+                println!("cargo:rustc-link-search=native={}", path.display());
             }
             true
         },
