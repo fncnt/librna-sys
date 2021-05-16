@@ -1,36 +1,75 @@
 # librna-sys
 
-This crate provides low-level C bindings to [`libRNA/RNAlib/viennaRNA`](https://www.tbi.univie.ac.at/RNA/).
+This crate provides low-level `Rust` bindings to [`libRNA/RNAlib/viennaRNA`](https://www.tbi.univie.ac.at/RNA/).
 
 ## Current State
 
-`librna-sys` is **highly experimental**.
-It's possible building or linking does not work reliably. 
+`librna-sys` is **highly experimental** and provides **unsafe low-level bindings**.
+It's possible that building or linking does not work reliably. 
+This crate was only tested on Linux but macOS might work as well.
 
-~~~See [`librna-rs`](https://github.com/fncnt/librna-rs) for equally experimental safe Rust bindings.~~~
+## Prerequisites
+
+- Install [`Rust`](https://rustup.rs/).
+- Install [`ViennaRNA`](https://www.tbi.univie.ac.at/RNA/#download).
+
+This crate requires the static library (`libRNA.a` on Linux and macOS) as well as the `C` header files.
 
 ## Configuration
 
-Use
+### Using Environment Variables
 
+`librna-sys` exposes two environment variables in case `ViennaRNA` is installed in a custom directory.
+Use them like this:
+
+```sh
+export LIBRNA_INCLUDE_DIR=/path/to/headerdirectory # default: /usr/include
+export LIBRNA_LIB_DIR=/path/to/librarydirectory # default: /usr/lib
 ```
-cargo build --features auto
+
+Afterwards the crate can be used as a dependency in `cargo.toml`:
+
+```toml
+[dependencies]
+librna-sys = { git = "https://github.com/fncnt/librna-sys", version = "0.1" }
 ```
 
-to let `pkg-config` search for the library and header files.
-By default, this feature is disabled and the build script uses the default system `lib` and `include` directories.
+### Using `pkg-config`
 
-If you've built `libRNA.a` manually in a local directory, 
-set `LIBRNA_INCLUDE_DIR` and `LIBRNA_LIB_DIR` to override these directories.
+If `pkg-config` is available on your system and `ViennaRNA` was installed properly
 
-## Contributing
+```toml
+[dependencies]
+librna-sys = { git = "https://github.com/fncnt/librna-sys", version = "0.1" , features = ["auto"] }
+```
 
-I'm still new to Rust. 
-If you know better and have any kind of good advice, feel free to let me know!
+may be used instead of setting environment variables.
 
-### TODO
-* [ ] Tests (manually and/or using `ctest`)
-* [ ] Fallback mode when building (using `git2-rs` to download ViennaRNA **or** using a submodule)
-* [ ] pre-generate bindings using bindgen CLI
-* [ ] Publish crate
-* [ ] Publish `librna-rs` on Github and link to it.
+## Usage
+
+Please refer to the [original documentation](https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/index.html) of the `C` API.
+In most cases, you probably want to use the official `Python` bindings.
+
+Use this crate only if some features of the `C` API are not exposed as `Python` bindings and you prefer writing *unsafe* `Rust` over `C` for some reason.
+
+### Example: Extending `ViennaRNA`
+
+*Note: This will probably at some point land in `ViennaRNA`.*
+
+[`examples/bpdist.rs`](examples/bpdist.rs) extends the base pair distance of `ViennaRNA` to secondary structures with pseudoknots.
+Building this example by running
+
+```sh
+cargo build --release --example bpdist #--features auto
+```
+
+produces a dynamic library `target/release/examples/libbpdist.so` exposing `Python` bindings.
+Copy it whereever you want and import it like this:
+
+```python
+from libbpdist import bp_distance_pk
+
+structures = [".((..[[[..))..]]].", ".((.[.[[..))..]]]."]
+print(bp_distance_pk(structures[0], structures[1]))
+```
+
