@@ -23,6 +23,19 @@ pkg-config = { optional = true, version = "~0.3" }
 
 [dependencies]
 
+[dev-dependencies]
+libc = "~0.2"
+pyo3 = { version = "~0.13", features = ["extension-module"] }
+
 [features]
 default = []
 auto = ["pkg-config"]
+
+
+[[example]]
+name = "bpdist"
+doctest = false
+crate-type = ["lib", "cdylib"]
+
+#default = ["pyo3/extension-module"]
+
