@@ -1,15 +1,17 @@
 [package]
 name = "librna-sys"
-authors = ["Vincent Messow <contact@vncnt.eu>"]
+authors = ["Vincent Messow"]
 build = "src/build.rs"
 links = "RNA"
 repository = "https://github.com/fncnt/librna-sys"
+homepage = "https://github.com/fncnt/librna-sys"
+documentation = "https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/index.html"
 readme = "README.md"
 license = "MIT"
 description = "Low-level bindings for libRNA of viennaRNA with support for linux."
 include = ["src/*", "Cargo.toml", "README.md", "COPYING"]
-keywords = ["viennarna", "rna", "bioinformatics", "sys"]
-categories = ["api-bindings", "external-ffi-bindings", "science"]
+keywords = ["viennarna", "rna", "bioinformatics", "sys", "ffi"]
+categories = ["external-ffi-bindings", "science"]
 version = "0.1.0"
 edition = "2018"
 
