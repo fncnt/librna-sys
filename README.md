@@ -31,7 +31,7 @@ Afterwards the crate can be used as a dependency in `cargo.toml`:
 
 ```toml
 [dependencies]
-librna-sys = { git = "https://github.com/fncnt/librna-sys", version = "0.1" }
+librna-sys = "0.1"
 ```
 
 ### Using `pkg-config`
@@ -40,7 +40,7 @@ If `pkg-config` is available on your system and `ViennaRNA` was installed proper
 
 ```toml
 [dependencies]
-librna-sys = { git = "https://github.com/fncnt/librna-sys", version = "0.1" , features = ["auto"] }
+librna-sys = { version = "0.1" , features = ["auto"] }
 ```
 
 may be used instead of setting environment variables.
