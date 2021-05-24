@@ -1,12 +1,12 @@
 # librna-sys
 
-This crate provides low-level `Rust` bindings to [`libRNA/RNAlib/viennaRNA`](https://www.tbi.univie.ac.at/RNA/).
+This crate provides low-level `Rust` bindings to [`libRNA/RNAlib/ViennaRNA`](https://www.tbi.univie.ac.at/RNA/).
 
 ## Current State
 
 `librna-sys` is **highly experimental** and provides **unsafe low-level bindings**.
 It's possible that building or linking does not work reliably. 
-This crate was only tested on Linux but macOS might work as well.
+This crate was only tested on Linux but macOS should work as well.
 
 ## Prerequisites
 
@@ -27,7 +27,7 @@ export LIBRNA_INCLUDE_DIR=/path/to/headerdirectory # default: /usr/include
 export LIBRNA_LIB_DIR=/path/to/librarydirectory # default: /usr/lib
 ```
 
-Afterwards the crate can be used as a dependency in `cargo.toml`:
+Afterwards the crate can be used as a dependency in `Cargo.toml`:
 
 ```toml
 [dependencies]
@@ -56,6 +56,8 @@ Use this crate only if some features of the `C` API are not exposed as `Python` 
 
 *Note: This will probably at some point land in `ViennaRNA`.*
 
+This example is intended to illustrate how `librna-sys` could be used to build upon `ViennaRNA`.
+
 [`examples/bpdist.rs`](examples/bpdist.rs) extends the base pair distance of `ViennaRNA` to secondary structures with pseudoknots.
 Building this example by running
 
@@ -72,4 +74,16 @@ from libbpdist import bp_distance_pk
 structures = [".((..[[[..))..]]].", ".((.[.[[..))..]]]."]
 print(bp_distance_pk(structures[0], structures[1]))
 ```
+## Contributions
 
+I'm open to any ideas or advice.
+At this point, it's not yet clear where this is going but here are a few thoughts:
+
+- Providing complete *safe* bindings to `ViennaRNA` is probably as complex as a complete rewrite in `Rust`.
+- Perhaps a separate crate could serve as a central collection of *safe* APIs extending `ViennaRNA`.
+
+## Known Issues
+
+If you encounter an error including `generated with LTO version X.0 instead of the expected Y.0`,
+you could either recompile `ViennaRNA` yourself or [downgrade your `Rust` toolchain](https://doc.rust-lang.org/rustc/linker-plugin-lto.html#toolchain-compatibility).
+Adjusting some [linker-related codegen options](https://doc.rust-lang.org/rustc/codegen-options/index.html#linker) might also help but was not thoroughly tested.

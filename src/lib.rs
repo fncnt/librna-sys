@@ -5,7 +5,6 @@
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
-
 // just a simple test as example
 #[cfg(test)]
 mod tests {
@@ -17,10 +16,8 @@ mod tests {
         let seq1 = CString::new(s1).expect("CString::new failed");
         let seq2 = CString::new(s2).expect("CString::new failed");
 
-        unsafe {
-            vrna_hamming_distance(seq1.as_ptr(), seq2.as_ptr())
-        }
-}
+        unsafe { vrna_hamming_distance(seq1.as_ptr(), seq2.as_ptr()) }
+    }
 
     #[test]
     fn hamming() {
