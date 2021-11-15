@@ -54,7 +54,7 @@ Use this crate only if some features of the `C` API are not exposed as `Python` 
 
 ### Example: Extending `ViennaRNA`
 
-[*Note: This will probably at some point land in `ViennaRNA`.*](https://github.com/ViennaRNA/ViennaRNA/pull/129)
+[*Note: As of version `2.5.0`, `ViennaRNA` contains support for the base pair distance with pseudoknots.*](https://github.com/ViennaRNA/ViennaRNA/pull/129)
 
 This example is intended to illustrate how `librna-sys` could be used to build upon `ViennaRNA`.
 
