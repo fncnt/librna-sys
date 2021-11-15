@@ -11,7 +11,7 @@ license = "MIT"
 description = "Low-level bindings for the ViennaRNA library."
 keywords = ["viennarna", "rna", "bioinformatics", "sys", "ffi"]
 categories = ["external-ffi-bindings", "science"]
-version = "0.1.2"
+version = "0.1.3"
 edition = "2018"
 
 [lib]
@@ -37,6 +37,3 @@ auto = ["pkg-config"]
 name = "bpdist"
 doctest = false
 crate-type = ["lib", "cdylib"]
-
-#default = ["pyo3/extension-module"]
-
