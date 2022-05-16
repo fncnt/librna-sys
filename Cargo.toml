@@ -1,39 +1,32 @@
 [package]
-name = "librna-sys"
+name = "librna"
 authors = ["Vincent Messow"]
-build = "src/build.rs"
-links = "RNA"
-repository = "https://github.com/fncnt/librna-sys"
-homepage = "https://github.com/fncnt/librna-sys"
-documentation = "https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/index.html"
+repository = "https://github.com/fncnt/librna-rs"
+homepage = "https://github.com/fncnt/librna-rs"
+documentation = "https://docs.rs/crate/librna"
 readme = "README.md"
 license = "MIT"
-description = "Low-level bindings for the ViennaRNA library."
-keywords = ["viennarna", "rna", "bioinformatics", "sys", "ffi"]
-categories = ["external-ffi-bindings", "science"]
-version = "0.1.4"
+description = "API bindings for the ViennaRNA library."
+keywords = ["viennarna", "rna", "bioinformatics"]
+categories = ["api-bindings", "science"]
+version = "0.1.0"
 edition = "2018"
+
+[workspace]
+members = ["librna-sys"]
 
 [lib]
 doctest = false
 crate-type = ["lib"]
 
 [build-dependencies]
-bindgen = "~0.59"
-pkg-config = { optional = true, version = "~0.3" }
 
 [dependencies]
+#libc = "~0.2"
+librna-sys = { path = "librna-sys", version = "0.1.4", features = [] }
 
 [dev-dependencies]
-libc = "~0.2"
-pyo3 = { version = "~0.16", features = ["extension-module"] }
 
 [features]
 default = []
-auto = ["pkg-config"]
-
-
-[[example]]
-name = "bpdist"
-doctest = false
-crate-type = ["lib", "cdylib"]
+auto = ["librna-sys/auto"]

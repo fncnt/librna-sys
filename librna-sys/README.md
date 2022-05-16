@@ -1,4 +1,4 @@
-# librna-rs
+# librna-sys
 
 This crate provides low-level `Rust` bindings to [`libRNA/RNAlib/ViennaRNA`](https://www.tbi.univie.ac.at/RNA/).
 

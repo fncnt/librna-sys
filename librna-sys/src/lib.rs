@@ -1,19 +1,14 @@
-//! TODO: top-level docs
+#![allow(non_upper_case_globals)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
+#![allow(improper_ctypes)]
 
-/// Re-export of unsafe FFI bindings
-///
-/// Documention is available [upstream][api-docs].
-///
-/// [api-docs]: https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/
-#[allow(missing_docs, dead_code, non_snake_case, non_camel_case_types)]
-pub mod ffi {
-    pub use librna_sys::*;
-}
+include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 // just a simple test as example
 #[cfg(test)]
 mod tests {
-    /*use super::*;
+    use super::*;
 
     use std::ffi::CString;
 
@@ -27,5 +22,5 @@ mod tests {
     #[test]
     fn hamming() {
         assert_eq!(hamming_distance("ACGUA", "ACGUC"), 1);
-    }*/
+    }
 }

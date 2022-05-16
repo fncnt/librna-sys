@@ -1,0 +1,39 @@
+[package]
+name = "librna-sys"
+authors = ["Vincent Messow"]
+build = "src/build.rs"
+links = "RNA"
+repository = "https://github.com/fncnt/librna-rs"
+homepage = "https://github.com/fncnt/librna-rs"
+documentation = "https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/index.html"
+readme = "README.md"
+license = "MIT"
+description = "Low-level bindings for the ViennaRNA library."
+keywords = ["viennarna", "rna", "bioinformatics", "sys", "ffi"]
+categories = ["external-ffi-bindings", "science"]
+version = "0.1.4"
+edition = "2018"
+
+[lib]
+doctest = false
+crate-type = ["lib"]
+
+[build-dependencies]
+bindgen = "~0.59"
+pkg-config = { optional = true, version = "~0.3" }
+
+[dependencies]
+
+[dev-dependencies]
+libc = "~0.2"
+pyo3 = { version = "~0.16", features = ["extension-module"] }
+
+[features]
+default = []
+auto = ["pkg-config"]
+
+
+[[example]]
+name = "bpdist"
+doctest = false
+crate-type = ["lib", "cdylib"]
