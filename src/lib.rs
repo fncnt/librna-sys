@@ -1,4 +1,5 @@
-//! TODO: top-level docs
+//! `librna` provides (incomplete) high-level bindings to the [ViennaRNA](https://www.tbi.univie.ac.at/RNA/) package
+//! for RNA secondary structure bioinformatics.
 
 /// Re-export of unsafe FFI bindings
 ///
@@ -9,6 +10,16 @@
 pub mod ffi {
     pub use librna_sys::*;
 }
+
+/// TODO: fold compound struct docs
+#[allow(dead_code)]
+pub mod fold_compound;
+
+use ffi::VRNA_VERSION;
+
+/// Version string of the statically linked `ViennaRNA` library.
+// Safety: the version string of ViennaRNA should always be valid Unicode
+pub const VERSION: &str = unsafe { std::str::from_utf8_unchecked(VRNA_VERSION) };
 
 // just a simple test as example
 #[cfg(test)]
