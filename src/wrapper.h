@@ -143,6 +143,6 @@
 // new since 2.4.18:
 // #include <ViennaRNA/pk_plex.h>
 // new since 2.5.0
-// include <ViennaRNA/pf_multifold.h>
+// #include <ViennaRNA/pf_multifold.h>
 // #include <ViennaRNA/subopt_zuker.h>
 // #include <ViennaRNA/wrap_dlib.h>

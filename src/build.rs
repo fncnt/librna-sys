@@ -21,14 +21,27 @@ impl bindgen::callbacks::ParseCallbacks for IgnoreMacros {
 }
 
 fn main() {
+    let mut includes: Vec<PathBuf> = vec![];
+
     if !configure_pkg_config() {
         if let Ok(include_dir) = env::var("LIBRNA_INCLUDE_DIR") {
-            println!("cargo:include={}", include_dir);
+            let mut include_path = PathBuf::from(include_dir)
+                .canonicalize()
+                .expect("cannot canonicalize path");
+
+            includes.push(include_path.clone());
+            include_path.push("ViennaRNA");
+            includes.push(include_path);
+
+            for include in &includes {
+                println!("cargo:include={}", include.display());
+            }
         } else {
             println!("cargo:warning=LIBRNA_INCLUDE_DIR not set.");
             println!("cargo:warning=Using LIBRNA_INCLUDE_DIR=/usr/include as default.");
 
             println!("cargo:include=/usr/include");
+            println!("cargo:include=/usr/include/ViennaRNA");
         }
 
         if let Ok(lib_dir) = env::var("LIBRNA_LIB_DIR") {
@@ -68,6 +81,9 @@ fn main() {
         .header("src/wrapper.h")
         .parse_callbacks(Box::new(ignored_macros))
         .rustfmt_bindings(true)
+        .clang_args(includes.iter().map(|dir| {
+            "-I".to_string() + dir.to_str().expect("LIBRNA_INCLUDE_DIR is not valid UTF-8")
+        }))
         .generate()
         .expect("Unable to generate bindings");
 
@@ -103,3 +119,4 @@ fn configure_pkg_config() -> bool {
 fn configure_pkg_config() -> bool {
     false
 }
+
