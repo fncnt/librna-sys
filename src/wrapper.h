@@ -1,3 +1,5 @@
+// [ViennaRNA 2.6.0] Apparently ViennaRNA/constraints/soft.h does not import size_t from stddef.h
+#include <stddef.h>
 #include <ViennaRNA/2Dfold.h>
 #include <ViennaRNA/2Dpfold.h>
 #include <ViennaRNA/alifold.h>
