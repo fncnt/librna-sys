@@ -141,8 +141,14 @@
 #include <ViennaRNA/walk.h>
 #include <ViennaRNA/zscore.h>
 // new since 2.4.18:
-// #include <ViennaRNA/pk_plex.h>
+#include <ViennaRNA/pk_plex.h>
 // new since 2.5.0
-// #include <ViennaRNA/pf_multifold.h>
-// #include <ViennaRNA/subopt_zuker.h>
-// #include <ViennaRNA/wrap_dlib.h>
+#include <ViennaRNA/pf_multifold.h>
+#include <ViennaRNA/subopt_zuker.h>
+#include <ViennaRNA/wrap_dlib.h>
+// new since 2.6.0
+#include <ViennaRNA/params/salt.h>
+#include <ViennaRNA/constraints/soft_special.h>
+#include <ViennaRNA/datastructures/array.h>
+#include <ViennaRNA/datastructures/string.h>
+#include <ViennaRNA/mconf.h>
