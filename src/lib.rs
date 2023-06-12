@@ -6,7 +6,6 @@
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 // just a simple test as example
-// currently broken for ViennaRNA >=2.5.0, probably related to dlib
 #[cfg(test)]
 mod tests {
     use super::*;
