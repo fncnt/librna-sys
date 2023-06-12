@@ -81,6 +81,9 @@ fn main() {
 
     let bindings = bindgen::Builder::default()
         .header("src/wrapper.h")
+        // [ViennaRNA 2.6.0] Apparently ViennaRNA/constraints/soft.h does not import size_t from stddef.h
+        .header_contents("aux.h", "#include <stddef.h>")
+        .blocklist_file("aux.h")
         .parse_callbacks(Box::new(ignored_macros))
         .merge_extern_blocks(true)
         .clang_args(includes.iter().map(|dir| {
