@@ -8,6 +8,19 @@ This crate provides low-level `Rust` bindings to [`libRNA/RNAlib/ViennaRNA`](htt
 It's possible that building or linking does not work reliably. 
 This crate was only tested on Linux but macOS should work as well.
 
+### Compatibility
+
+| `librna-sys` | ViennaRNA | Notes |
+| ------------ | --------- | ----- |
+| `<=0.1.4` | `<= 2.4.18` | Bindings to `ViennaRNA/pk_plex.h` introduced in `2.4.18` were not included |
+| `0.1.5` | `<=2.5.*` | Bindings to new headers `ViennaRNA/pf_multifold.h`, `ViennaRNA/subopt_zuker.h` and `ViennaRNA/wrap_dlib.h` not included |
+| `0.1.6-0.1.7` | `<=2.6.0` | see above |
+| `0.2.0` | `>=2.6.0` | Added new header files introduced since 2.4.18 through 2.6.0 |
+
+This table might be inconsinstent and incomplete. Please report any inaccuracies.
+In general, only the latest version of ViennaRNA is supported but please reach out if you try to make an older version work.
+Starting with `librna-sys@0.2.0`, I aim to release new minor versions in lockstep with new backwards-incompatible versions of ViennaRNA.
+
 ## Prerequisites
 
 - Install [`Rust`](https://rustup.rs/).
