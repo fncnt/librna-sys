@@ -17,7 +17,7 @@ This crate was only tested on Linux but macOS should work as well.
 | `0.1.6-0.1.7` | `<=2.6.0` | see above |
 | `0.2.0` | `>=2.6.0` | Added new header files introduced since 2.4.18 through 2.6.0 |
 
-This table might be inconsinstent and incomplete. Please report any inaccuracies.
+This chart might be inconsinstent and incomplete. Please report any inaccuracies.
 In general, only the latest version of ViennaRNA is supported but please reach out if you try to make an older version work.
 Starting with `librna-sys@0.2.0`, I aim to release new minor versions in lockstep with new backwards-incompatible versions of ViennaRNA.
 
@@ -44,7 +44,7 @@ Afterwards the crate can be used as a dependency in `Cargo.toml`:
 
 ```toml
 [dependencies]
-librna-sys = "0.1"
+librna-sys = "0.2"
 ```
 
 ### Using `pkg-config`
@@ -53,7 +53,7 @@ If `pkg-config` is available on your system and `ViennaRNA` was installed proper
 
 ```toml
 [dependencies]
-librna-sys = { version = "0.1" , features = ["auto"] }
+librna-sys = { version = "0.2" , features = ["auto"] }
 ```
 
 may be used instead of setting environment variables.
