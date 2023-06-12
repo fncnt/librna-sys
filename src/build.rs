@@ -82,7 +82,7 @@ fn main() {
     let bindings = bindgen::Builder::default()
         .header("src/wrapper.h")
         .parse_callbacks(Box::new(ignored_macros))
-        .rustfmt_bindings(true)
+        .merge_extern_blocks(true)
         .clang_args(includes.iter().map(|dir| {
             "-I".to_string() + dir.to_str().expect("LIBRNA_INCLUDE_DIR is not valid UTF-8")
         }))
