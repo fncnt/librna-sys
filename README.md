@@ -15,7 +15,8 @@ This crate was only tested on Linux but macOS should work as well.
 | `<=0.1.4` | `<= 2.4.18` | Bindings to `ViennaRNA/pk_plex.h` introduced in `2.4.18` were not included |
 | `0.1.5` | `<=2.5.*` | Bindings to new headers `ViennaRNA/pf_multifold.h`, `ViennaRNA/subopt_zuker.h` and `ViennaRNA/wrap_dlib.h` not included |
 | `0.1.6-0.1.7` | `<=2.6.0` | see above |
-| `0.2.0` | `>=2.6.0` | Added new header files introduced since 2.4.18 through 2.6.0 |
+| `0.2.0` | `2.6.0 - 2.6.2` | Added new header files introduced since 2.4.18 through 2.6.0 |
+| `0.2.1` | `>=2.6.3` | Removed workaround for issue fixed in [#189](https://github.com/ViennaRNA/ViennaRNA/pull/189). |
 
 This chart might be inconsinstent and incomplete. Please report any inaccuracies.
 In general, only the latest version of ViennaRNA is supported but please reach out if you try to make an older version work.
