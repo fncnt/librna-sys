@@ -137,11 +137,7 @@
 #include <ViennaRNA/utils/structures.h>
 #include <ViennaRNA/utils/svm.h>
 #include <ViennaRNA/utils/units.h>
-// broken in 2.6.3 due to https://github.com/ViennaRNA/ViennaRNA/commit/34a1f020d18901b5460113997b4c2fcefc8e95c4
-// @CONFIG_JSON@ in vrna_config.h.in should be substituted in vrna_config.h but it isn't.
-// JSON is always enabled since ViennaRNA 2.6.3
-// Will re-include when https://github.com/ViennaRNA/ViennaRNA/pull/199 is merged.
-// #include <ViennaRNA/vrna_config.h>
+#include <ViennaRNA/vrna_config.h>
 #include <ViennaRNA/walk.h>
 #include <ViennaRNA/zscore.h>
 // new since 2.4.18:
