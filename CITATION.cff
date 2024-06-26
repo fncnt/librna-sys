@@ -1,0 +1,53 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: librna-sys
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Vincent
+    family-names: Messow
+    orcid: 'https://orcid.org/0000-0002-4467-8804'
+repository-code: 'https://github.com/fncnt/librna-sys'
+repository: 'https://crates.io/crates/librna-sys'
+abstract: Unsafe low-level Rust bindings for the ViennaRNA package.
+keywords:
+  - rust-lang
+  - rust
+  - bioinformatics
+  - rna
+  - viennarna
+license: MIT
+version: 0.2.2
+date-released: '2023-10-03'
+references:
+  - authors:
+      - family-names: Lorenz
+        given-names: Ronny
+      - family-names: Bernhart
+        given-names: Stephan H.
+      - family-names: Höner zu Siederdissen
+        given-names: Christian
+      - family-names: Tafer
+        given-names: Hakim
+      - family-names: Flamm
+        given-names: Christoph
+      - family-names: Stadler
+        given-names: Peter F.
+      - family-names: Hofacker
+        given-names: Ivo L.
+    title: ViennaRNA Package 2.0
+    abstract: Secondary structure forms an important intermediate level of description of nucleic acids that encapsulates the dominating part of the folding energy, is often well conserved in evolution, and is routinely used as a basis to explain experimental findings. Based on carefully measured thermodynamic parameters, exact dynamic programming algorithms can be used to compute ground states, base pairing probabilities, as well as thermodynamic properties.
+    journal: Algorithms for Molecular Biology
+    repository-code: https://github.com/ViennaRNA/ViennaRNA
+    url: http://www.tbi.univie.ac.at/RNA
+    doi: 10.1186/1748-7188-6-26
+    issn: 1748-7188
+    issue: 1
+    volume: 6
+    start: 26
+    date-published: "2011-11-24"
+    type: article
