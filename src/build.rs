@@ -98,7 +98,10 @@ fn main() {
 
 #[cfg(feature = "auto")]
 fn configure_pkg_config() -> bool {
-    match pkg_config::probe_library("RNAlib2") {
+    match pkg_config::Config::new()
+        .atleast_version("2.6.0")
+        .probe("RNAlib2")
+    {
         Ok(info) => {
             // println!("cargo:warning=pkg_config probing successful.");
             for path in info.include_paths {
