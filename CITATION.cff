@@ -21,8 +21,8 @@ keywords:
   - rna
   - viennarna
 license: MIT
-version: 0.2.2
-date-released: '2023-10-03'
+version: 0.2.3
+date-released: '2024-06-26'
 references:
   - authors:
       - family-names: Lorenz
@@ -49,5 +49,5 @@ references:
     issue: 1
     volume: 6
     start: 26
-    date-published: "2011-11-24"
+    date-published: '2011-11-24'
     type: article
