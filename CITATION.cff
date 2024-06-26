@@ -21,10 +21,18 @@ keywords:
   - rna
   - viennarna
 license: MIT
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.12543036
+    description: The unversioned DOI of this work.
+  - type: doi
+    value: 10.5281/zenodo.12543037
+    description: The DOI for v0.2.3 of this work.
 version: 0.2.3
 date-released: '2024-06-26'
 references:
-  - authors:
+  - type: article
+    authors:
       - family-names: Lorenz
         given-names: Ronny
       - family-names: Bernhart
@@ -50,4 +58,3 @@ references:
     volume: 6
     start: 26
     date-published: '2011-11-24'
-    type: article

@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12543036.svg)](https://doi.org/10.5281/zenodo.12543036)
+
 # librna-sys
 
 This crate provides low-level `Rust` bindings to [`libRNA/RNAlib/ViennaRNA`](https://www.tbi.univie.ac.at/RNA/).
