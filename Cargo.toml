@@ -20,9 +20,10 @@ crate-type = ["lib"]
 
 [build-dependencies]
 bindgen = "~0.64"
-pkg-config = { optional = true, version = "~0.3" }
+pkg-config = { version = "~0.3", optional = true }
 
 [dependencies]
+openmp-sys = { version = "1.2.3", optional = true }
 
 [dev-dependencies]
 libc = "~0.2"
@@ -31,6 +32,8 @@ pyo3 = { version = "~0.16", features = ["extension-module"] }
 [features]
 default = []
 auto = ["pkg-config"]
+openmp = ["openmp-sys"]
+static-openmp = ["openmp-sys?/static"]
 
 
 [[example]]

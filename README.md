@@ -62,6 +62,19 @@ librna-sys = { version = "0.2" , features = ["auto"] }
 
 may be used instead of setting environment variables.
 
+## Linking OpenMP
+
+ViennaRNA is linked against OpenMP both internally and in its bundled `libsvm` dependency.
+The latter may cause linking issues with the Rust compiler.
+
+This can be solved by adding [`openmp-sys`](https://crates.io/crates/openmp-sys) in downstream Rust code.
+
+For convenience, `librna-sys` exposes two cargo features that directly follow `openmp-sys`; `openmp` and `static-openmp`.
+The latter has to be enabled in conjunction with the former to show any effect.
+
+However, using `openmp-sys` directly is arguably cleaner and more flexible as downstream crates would not need to pass through
+cargo features to provide the same level of control.
+
 ## Usage
 
 Please refer to the [original documentation](https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/index.html) of the `C` API.
