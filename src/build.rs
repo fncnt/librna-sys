@@ -75,7 +75,7 @@ fn main() {
 
     println!("cargo:rustc-link-lib=static=RNA");
     // [ViennaRNA >= 2.5.0] This fixed broken linkage due to dlib when running `cargo test`
-    println!("cargo:rustc-link-lib=static=stdc++");
+    println!("cargo:rustc-link-lib=stdc++");
 
     println!("cargo:rerun-if-changed=src/wrapper.h");
 
