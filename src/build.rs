@@ -99,7 +99,7 @@ fn main() {
 #[cfg(feature = "auto")]
 fn configure_pkg_config() -> bool {
     match pkg_config::Config::new()
-        .atleast_version("2.6.0")
+        .atleast_version("2.7.0")
         .probe("RNAlib2")
     {
         Ok(info) => {
