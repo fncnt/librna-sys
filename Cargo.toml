@@ -19,7 +19,7 @@ doctest = false
 crate-type = ["lib"]
 
 [build-dependencies]
-bindgen = "~0.64"
+bindgen = "~0.70"
 pkg-config = { version = "~0.3", optional = true }
 
 [dependencies]
