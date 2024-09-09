@@ -152,3 +152,8 @@
 #include <ViennaRNA/datastructures/array.h>
 #include <ViennaRNA/datastructures/string.h>
 #include <ViennaRNA/mconf.h>
+// new since 2.7.0
+#include <ViennaRNA/loops/gquad.h>
+#include <ViennaRNA/constraints/probing.h>
+#include <ViennaRNA/datastructures/sparse_mx.h>
+#include <ViennaRNA/utils/log.h>
