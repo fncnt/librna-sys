@@ -5,7 +5,8 @@ cff-version: 1.2.0
 title: librna-sys
 message: >-
   If you use this software, please cite it using the
-  metadata from this file.
+  metadata from its CITATION.cff file. If applicable,
+  choose a version-release-specific DOI from Zenodo.
 type: software
 authors:
   - given-names: Vincent
@@ -25,8 +26,8 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.12543036
     description: The unversioned DOI of this work.
-version: 0.2.3
-date-released: '2024-06-26'
+version: 0.3.0-pre.0
+date-released: '2024-09-DD'
 references:
   - type: article
     authors:
