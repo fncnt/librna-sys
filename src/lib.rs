@@ -3,9 +3,6 @@
 #![allow(non_snake_case)]
 #![allow(improper_ctypes)]
 
-#[cfg(feature = "openmp")]
-extern crate openmp_sys;
-
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 #[cfg(test)]
@@ -56,12 +53,9 @@ mod tests {
         assert_eq!(hamming_distance("ACGUA", "ACGUC"), 1);
     }
 
-    // We only run this test when we're sure that OpenMP is definitely linked!
-    // TODO: If we're sure at some point, that there are "linkable" configurations of ViennaRNA without OpenMP
-    // TODO: we can remove that cfg attribute.
-    // TODO: this test case failing to link would be then a helpful diagnostic.
+    // Prior to ViennaRNA 2.7.0, this would fail linking OpenMP which could be worked around using `openmp-sys`.
+    // This is not necessary anymore, so this test is always run to verify linking works in future releases.
     #[test]
-    #[cfg(feature = "openmp")]
     fn test_link_openmp() {
         let sequence = "GUACUGAUGUCGUAUACAGGGCUUUUGACAU";
         let _fc = FoldCompound::new(sequence);
@@ -80,6 +74,5 @@ mod tests {
         // assert_eq!(version_string, Some("2.7.0"));
         // but this changes with every patch release of ViennaRNA.
         assert!(version_string.is_some());
-
     }
 }
