@@ -12,9 +12,9 @@ include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 mod tests {
     use super::{
         vrna_fold_compound, vrna_fold_compound_free, vrna_fold_compound_t, vrna_hamming_distance,
-        vrna_md_t, VRNA_OPTION_EVAL_ONLY,
+        vrna_md_t, VRNA_OPTION_EVAL_ONLY, VRNA_VERSION,
     };
-    use std::ffi::CString;
+    use std::ffi::{CStr, CString};
 
     struct FoldCompound {
         // TODO: this should be wrapped in NonNull<> for proper safe bindings
@@ -65,5 +65,21 @@ mod tests {
     fn test_link_openmp() {
         let sequence = "GUACUGAUGUCGUAUACAGGGCUUUUGACAU";
         let _fc = FoldCompound::new(sequence);
+    }
+
+    #[test]
+    fn test_version_string() {
+        // TODO: Ideally, this would be const but handling Result<>/Option<> types is not const.
+        // TODO: We could use const unsafe str::from_utf8_unchecked() but this still has the null byte.
+        let version_string: Option<&str> = CStr::from_bytes_until_nul(VRNA_VERSION)
+            .ok()
+            .and_then(|v| v.to_str().ok());
+
+        // We're only checking that `version_string` is valid UTF8.
+        // We could check for the specific string:
+        // assert_eq!(version_string, Some("2.7.0"));
+        // but this changes with every patch release of ViennaRNA.
+        assert!(version_string.is_some());
+
     }
 }
