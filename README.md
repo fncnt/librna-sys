@@ -20,6 +20,7 @@ This crate was only tested on Linux but macOS should work as well.
 | `0.2.0` | `2.6.0 - 2.6.2` | Added new header files introduced since 2.4.18 through 2.6.0 |
 | `0.2.1` | `>=2.6.3` | Removed workaround for issue fixed in [#189](https://github.com/ViennaRNA/ViennaRNA/pull/189). |
 | `>=0.2.2` | `>=2.6.4` | Re-added `vrna_config.h` which was removed in `0.2.1` as a workaround for an issue fixed in [#199](https://github.com/ViennaRNA/ViennaRNA/pull/199) |
+| `>=0.3.0` | `>=2.7.0` | Issue [#3](https://github.com/fncnt/librna-sys/issues/3) should be resolved now. Added new header files for `2.7.0` |
 
 This chart might be inconsinstent and incomplete. Please report any inaccuracies.
 In general, only the latest version of ViennaRNA is supported but please reach out if you try to make an older version work.
@@ -33,6 +34,17 @@ Starting with `librna-sys@0.2.0`, I aim to release new minor versions in lockste
 This crate requires the static library (`libRNA.a` on Linux and macOS) as well as the `C` header files.
 
 ## Configuration
+
+### Using `pkg-config` (preferred method)
+
+If `pkg-config` is available on your system and `ViennaRNA` was installed properly
+
+```toml
+[dependencies]
+librna-sys = { version = "0.3" , features = ["auto"] }
+```
+
+may be used to automatically set the correct linking options.
 
 ### Using Environment Variables
 
@@ -48,32 +60,8 @@ Afterwards the crate can be used as a dependency in `Cargo.toml`:
 
 ```toml
 [dependencies]
-librna-sys = "0.2"
+librna-sys = "0.3"
 ```
-
-### Using `pkg-config`
-
-If `pkg-config` is available on your system and `ViennaRNA` was installed properly
-
-```toml
-[dependencies]
-librna-sys = { version = "0.2" , features = ["auto"] }
-```
-
-may be used instead of setting environment variables.
-
-## Linking OpenMP
-
-ViennaRNA is linked against OpenMP both internally and in its bundled `libsvm` dependency.
-The latter may cause linking issues with the Rust compiler.
-
-This can be solved by adding [`openmp-sys`](https://crates.io/crates/openmp-sys) in downstream Rust code.
-
-For convenience, `librna-sys` exposes two cargo features that directly follow `openmp-sys`; `openmp` and `static-openmp`.
-The latter has to be enabled in conjunction with the former to show any effect.
-
-However, using `openmp-sys` directly is arguably cleaner and more flexible as downstream crates would not need to pass through
-cargo features to provide the same level of control.
 
 ## Usage
 
@@ -117,3 +105,11 @@ At this point, it's not yet clear where this is going but here are a few thought
 If you encounter an error including `generated with LTO version X.0 instead of the expected Y.0`,
 you could either recompile `ViennaRNA` yourself or [downgrade your `Rust` toolchain](https://doc.rust-lang.org/rustc/linker-plugin-lto.html#toolchain-compatibility).
 Adjusting some [linker-related codegen options](https://doc.rust-lang.org/rustc/codegen-options/index.html#linker) might also help but was not thoroughly tested.
+
+### Linking OpenMP
+
+ViennaRNA is linked against OpenMP both internally and in its bundled `libsvm` dependency.
+**Prior to version `2.7.0`**, this could cause linking issues with the Rust compiler.
+
+This can be solved by adding [`openmp-sys`](https://crates.io/crates/openmp-sys) in downstream Rust code.
+However, this shouldn't be necessary with `librna-sys>=0.3` and ViennaRNA `>=2.7.0`.
