@@ -26,7 +26,7 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.12543036
     description: The unversioned DOI of this work.
-version: 0.3.0-pre.0
+version: 0.3.0-pre.1
 date-released: '2024-09-DD'
 references:
   - type: article

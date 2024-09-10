@@ -11,7 +11,7 @@ license = "MIT"
 description = "Low-level bindings for the ViennaRNA library."
 keywords = ["viennarna", "rna", "bioinformatics", "sys", "ffi"]
 categories = ["external-ffi-bindings", "science"]
-version = "0.3.0-pre.0"
+version = "0.3.0-pre.1"
 edition = "2018"
 
 [lib]
