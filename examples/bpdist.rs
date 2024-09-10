@@ -56,15 +56,15 @@ pub fn bp_distance_pk(s1: &str, s2: &str) -> Option<i32> {
     )
 }
 
-#[pymodule]
-fn libbpdist(_py: Python, m: &PyModule) -> PyResult<()> {
-    #[pyfn(m)]
-    #[pyo3(name = "bp_distance_pk")]
-    fn bp_distance_pk_py(_py: Python, s1: &str, s2: &str) -> PyResult<i32> {
-        Ok(bp_distance_pk(s1, s2).unwrap())
-    }
+#[pyfunction]
+#[pyo3(name = "bp_distance_pk")]
+fn bp_distance_pk_py(s1: &str, s2: &str) -> PyResult<i32> {
+    Ok(bp_distance_pk(s1, s2).unwrap())
+}
 
-    Ok(())
+#[pymodule]
+fn libbpdist(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(bp_distance_pk_py, m)?)
 }
 
 #[cfg(test)]
