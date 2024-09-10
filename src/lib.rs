@@ -12,30 +12,34 @@ mod tests {
         vrna_md_t, VRNA_OPTION_EVAL_ONLY, VRNA_VERSION,
     };
     use std::ffi::{CStr, CString};
+    use std::ptr::NonNull;
 
     struct FoldCompound {
-        // TODO: this should be wrapped in NonNull<> for proper safe bindings
-        fc: *mut vrna_fold_compound_t,
+        fc: NonNull<vrna_fold_compound_t>,
     }
 
     impl FoldCompound {
         #[allow(unused)]
-        fn new(sequence: &str) -> Self {
+        fn new(sequence: &str) -> Option<FoldCompound> {
             let csequence = CString::new(sequence).expect("CString::new failed");
-            // SAFETY: TODO
+
+            // SAFETY: `vrna_fold_compound()` may return `NULL`
+            // SAFETY: (e.g. if the input sequence is empty or an otherwise invalid RNA sequence).
+            // SAFETY: we handle this situation by returning `None` when this happens.
             let fc = unsafe {
                 let md = std::ptr::null::<vrna_md_t>();
                 vrna_fold_compound(csequence.as_ptr(), md, VRNA_OPTION_EVAL_ONLY)
             };
-            Self { fc }
+
+            NonNull::new(fc).map(|fc| Self { fc })
         }
     }
 
     impl Drop for FoldCompound {
         fn drop(&mut self) {
-            // SAFETY: self.fc is non-null, valid by construction, and has not been freed yet.
+            // SAFETY: self.fc.as_ptr() is non-null, valid by construction, and has not been freed yet.
             unsafe {
-                vrna_fold_compound_free(self.fc);
+                vrna_fold_compound_free(self.fc.as_ptr());
             }
         }
     }
@@ -58,7 +62,8 @@ mod tests {
     #[test]
     fn test_link_openmp() {
         let sequence = "GUACUGAUGUCGUAUACAGGGCUUUUGACAU";
-        let _fc = FoldCompound::new(sequence);
+        let fc = FoldCompound::new(sequence);
+        assert!(fc.is_some());
     }
 
     #[test]
