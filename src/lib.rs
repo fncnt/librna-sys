@@ -2,7 +2,10 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(improper_ctypes)]
-
+// address some clippy lints originating in the generated bindings
+// TODO: investigate alternatives to simply suppressing these lints
+#![allow(clippy::approx_constant)]
+#![allow(clippy::type_complexity)]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 #[cfg(test)]
@@ -19,7 +22,6 @@ mod tests {
     }
 
     impl FoldCompound {
-        #[allow(unused)]
         fn new(sequence: &str) -> Option<FoldCompound> {
             let csequence = CString::new(sequence).expect("CString::new failed");
 
