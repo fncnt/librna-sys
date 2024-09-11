@@ -88,6 +88,9 @@ fn main() {
         .header("src/wrapper.h")
         .parse_callbacks(Box::new(ignored_macros))
         .merge_extern_blocks(true)
+        .clang_args(includes.iter().map(|dir| {
+            "-I".to_string() + dir.to_str().expect("LIBRNA_INCLUDE_DIR is not valid UTF-8")
+        }))
         .generate()
         .expect("Unable to generate bindings");
 
