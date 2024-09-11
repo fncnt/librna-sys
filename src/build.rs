@@ -20,8 +20,10 @@ impl bindgen::callbacks::ParseCallbacks for IgnoreMacros {
 }
 
 fn main() {
+    let mut includes: Vec<PathBuf> = vec![];
+
     if !configure_pkg_config() {
-        let include_path = PathBuf::from(env::var("LIBRNA_INCLUDE_DIR").unwrap_or_else(|e| {
+        let mut include_path = PathBuf::from(env::var("LIBRNA_INCLUDE_DIR").unwrap_or_else(|e| {
             println!(
                 "cargo:warning={}. Using default {}={}",
                 e, "LIBRNA_INCLUDE_DIR", "/usr/include"
@@ -31,9 +33,14 @@ fn main() {
         .canonicalize()
         .expect("cannot canonicalize path");
 
-        // metadata for directly depending crates
-        println!("cargo:include={}", &include_path.display());
-        println!("cargo:include={}", include_path.join("ViennaRNA").display());
+        includes.push(include_path.clone());
+        include_path.push("ViennaRNA");
+        includes.push(include_path);
+
+        for include in &includes {
+            // metadata for directly depending crates
+            println!("cargo:include={}", include.display());
+        }
 
         let lib_path = PathBuf::from(env::var("LIBRNA_LIB_DIR").unwrap_or_else(|e| {
             println!(
