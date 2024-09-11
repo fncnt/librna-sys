@@ -83,6 +83,8 @@ fn main() {
     );
 
     println!("cargo:rerun-if-changed=src/wrapper.h");
+    println!("cargo:rerun-if-env-changed=LIBRNA_LIB_DIR");
+    println!("cargo:rerun-if-env-changed=LIBRNA_INCLUDE_DIR");
 
     let bindings = bindgen::Builder::default()
         .header("src/wrapper.h")
