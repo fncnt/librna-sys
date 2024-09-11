@@ -34,12 +34,14 @@ fn main() {
             includes.push(include_path);
 
             for include in &includes {
+                // metadata for directly depending crates
                 println!("cargo:include={}", include.display());
             }
         } else {
             println!("cargo:warning=LIBRNA_INCLUDE_DIR not set.");
             println!("cargo:warning=Using LIBRNA_INCLUDE_DIR=/usr/include as default.");
 
+            // metadata for directly depending crates
             println!("cargo:include=/usr/include");
             println!("cargo:include=/usr/include/ViennaRNA");
         }
@@ -59,6 +61,13 @@ fn main() {
 
             println!("cargo:rustc-link-search=native=/usr/lib");
         }
+        // FIXME: with pkg-config, cargo:rustc-link-search suffices (don't even need it), I don't need explicit cargo:rustc-link-lib
+        // FIXME: actually, that's because pkg-config does it for us
+        // FIXME: make this a loop
+        const LIBS: &[&str] = &["static=RNA", "stdc++", "gsl", "mpfr", "gomp", "gmp"];
+        for lib in LIBS {
+            println!("cargo:rustc-link-lib={}", lib);
+        }
     }
 
     let ignored_macros = IgnoreMacros(
@@ -72,10 +81,6 @@ fn main() {
         .into_iter()
         .collect(),
     );
-
-    println!("cargo:rustc-link-lib=static=RNA");
-    // [ViennaRNA >= 2.5.0] This fixed broken linkage due to dlib when running `cargo test`
-    println!("cargo:rustc-link-lib=stdc++");
 
     println!("cargo:rerun-if-changed=src/wrapper.h");
 
@@ -100,21 +105,21 @@ fn main() {
 fn configure_pkg_config() -> bool {
     match pkg_config::Config::new()
         .atleast_version("2.7.0")
+        .statik(true)
         .probe("RNAlib2")
     {
         Ok(info) => {
-            // println!("cargo:warning=pkg_config probing successful.");
+            // metadata for directly depending crates
             for path in info.include_paths {
                 println!("cargo:include={}", path.display());
             }
-            for path in info.link_paths {
-                println!("cargo:rustc-link-search=native={}", path.display());
-            }
+
             true
         }
         Err(err) => {
             println!("cargo:warning=pkg_config failed ({}).", err);
             println!("cargo:warning=Consider setting LIBRNA_INCLUDE_DIR/LIBRNA_LIB_DIR instead.");
+
             false
         }
     }
