@@ -4,7 +4,6 @@ extern crate pkg_config;
 
 use std::collections::HashSet;
 use std::env;
-use std::path::Path;
 use std::path::PathBuf;
 
 #[derive(Debug)]
@@ -24,42 +23,42 @@ fn main() {
     let mut includes: Vec<PathBuf> = vec![];
 
     if !configure_pkg_config() {
-        if let Ok(include_dir) = env::var("LIBRNA_INCLUDE_DIR") {
-            let mut include_path = PathBuf::from(include_dir)
-                .canonicalize()
-                .expect("cannot canonicalize path");
+        let mut include_path = PathBuf::from(env::var("LIBRNA_INCLUDE_DIR").unwrap_or_else(|e| {
+            println!(
+                "cargo:warning={}. Using default {}={}",
+                e, "LIBRNA_INCLUDE_DIR", "/usr/include"
+            );
+            String::from("/usr/include")
+        }))
+        .canonicalize()
+        .expect("cannot canonicalize path");
 
-            includes.push(include_path.clone());
-            include_path.push("ViennaRNA");
-            includes.push(include_path);
+        includes.push(include_path.clone());
+        include_path.push("ViennaRNA");
+        includes.push(include_path);
 
-            for include in &includes {
-                // metadata for directly depending crates
-                println!("cargo:include={}", include.display());
-            }
-        } else {
-            println!("cargo:warning=LIBRNA_INCLUDE_DIR not set.");
-            println!("cargo:warning=Using LIBRNA_INCLUDE_DIR=/usr/include as default.");
-
+        for include in &includes {
             // metadata for directly depending crates
-            println!("cargo:include=/usr/include");
-            println!("cargo:include=/usr/include/ViennaRNA");
+            println!("cargo:include={}", include.display());
         }
 
-        if let Ok(lib_dir) = env::var("LIBRNA_LIB_DIR") {
-            let lib_dir = Path::new(&lib_dir);
+        let lib_path = PathBuf::from(env::var("LIBRNA_LIB_DIR").unwrap_or_else(|e| {
+            println!(
+                "cargo:warning={}. Using default {}={}",
+                e, "LIBRNA_LIB_DIR", "/usr/lib"
+            );
+            String::from("/usr/lib")
+        }))
+        .canonicalize()
+        .expect("cannot canonicalize path");
 
-            if lib_dir.join("libRNA.a").exists() {
-                println!("cargo:rustc-link-search=native={}", lib_dir.display());
-            } else {
-                println!("cargo:warning=libRNA.a not found!");
-                println!("cargo:warning=Fallback mode for locally building libRNA.a is not yet implemented.");
-            }
+        if lib_path.join("libRNA.a").exists() {
+            println!("cargo:rustc-link-search=native={}", lib_path.display());
         } else {
-            println!("cargo:warning=LIBRNA_LIB_DIR not set.");
-            println!("cargo:warning=Using LIBRNA_LIB_DIR=/usr/lib as default.");
-
-            println!("cargo:rustc-link-search=native=/usr/lib");
+            println!("cargo:warning=libRNA.a not found!");
+            println!(
+                "cargo:warning=Fallback mode for locally building libRNA.a is not yet implemented."
+            );
         }
 
         const LIBS: &[&str] = &["static=RNA", "stdc++", "gsl", "mpfr", "gomp", "gmp"];
