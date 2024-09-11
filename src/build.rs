@@ -61,10 +61,9 @@ fn main() {
 
             println!("cargo:rustc-link-search=native=/usr/lib");
         }
-        // FIXME: with pkg-config, cargo:rustc-link-search suffices (don't even need it), I don't need explicit cargo:rustc-link-lib
-        // FIXME: actually, that's because pkg-config does it for us
-        // FIXME: make this a loop
+
         const LIBS: &[&str] = &["static=RNA", "stdc++", "gsl", "mpfr", "gomp", "gmp"];
+
         for lib in LIBS {
             println!("cargo:rustc-link-lib={}", lib);
         }
