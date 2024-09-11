@@ -8,7 +8,7 @@ This crate provides low-level Rust bindings to [`libRNA/RNAlib/ViennaRNA`](https
 
 `librna-sys` is mostly **experimental** and provides **unsafe low-level bindings**.
 You might encounter issues with building or linking this crate but common installation setups of ViennaRNA should work reliably.
-This crate was only tested on Linux but macOS should work as well.
+This crate was only tested on Linux. MacOS might work, possibly with some adjustments.
 
 ### Compatibility
 
@@ -56,7 +56,7 @@ export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$LIBRNA_PREFIX/lib/pkgconfig"
 
 ### Using Environment Variables
 
-`librna-sys` exposes two environment variables in case `pkg-config` is not available.
+`librna-sys` exposes two environment variables in case `pkg-config` is not available or the `auto` feature is not enabled.
 Use them like this:
 
 ```sh
@@ -96,7 +96,7 @@ cargo build --release --example bpdist #--features auto
 ```
 
 produces a dynamic library `target/release/examples/libbpdist.so` exposing `Python` bindings.
-Copy it whereever you want and import it like this:
+Copy it wherever you want and import it like this:
 
 ```python
 from libbpdist import bp_distance_pk
@@ -110,7 +110,7 @@ I'm open to any ideas or advice.
 
 It is not necessarily planned to provide *complete, safe* bindings to ViennaRNA.
 However, I would like to restructure this project slightly and add a crate `librna-rs`
-That provides a safely wrapped subset of ViennaRNA functionality that can be extended when the need arises.
+providing a safely wrapped subset of ViennaRNA functionality that can be extended when the need arises.
 
 ## Known Issues
 
