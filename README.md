@@ -24,7 +24,7 @@ This crate was only tested on Linux but macOS should work as well.
 
 This chart might be inconsinstent and incomplete. Please report any inaccuracies.
 In general, only the latest version of ViennaRNA is supported but please reach out if you try to make an older version work.
-Starting with `librna-sys@0.2.0`, new minor versions have been released in lockstep with new backwards-incompatible versions of ViennaRNA.
+Since `librna-sys@0.2.0`, new minor versions have been released in lockstep with new backwards-incompatible versions of ViennaRNA.
 
 ## Prerequisites
 
@@ -45,16 +45,28 @@ librna-sys = { version = "0.3" , features = ["auto"] }
 ```
 
 may be used to automatically set the correct linking options.
+If ViennaRNA is installed into a custom prefix that `pkg-config` is *not* aware of,
+you can use environment variables to tell `pkg-config` where to look:
+
+```sh
+export LIBRNA_PREFIX=/not/usr # for convenience
+
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$LIBRNA_PREFIX/lib/pkgconfig"
+```
 
 ### Using Environment Variables
 
-`librna-sys` exposes two environment variables in case ViennaRNA is installed in a custom directory.
+`librna-sys` exposes two environment variables in case `pkg-config` is not available.
 Use them like this:
 
 ```sh
-export LIBRNA_INCLUDE_DIR=/path/to/headerdirectory # default: /usr/include
-export LIBRNA_LIB_DIR=/path/to/librarydirectory # default: /usr/lib
+export LIBRNA_INCLUDE_DIR=$LIBRNA_PREFIX/include # default: /usr/include
+export LIBRNA_LIB_DIR=$LIBRNA_PREFIX/lib # default: /usr/lib
 ```
+
+However, note that this approach is limited and assumes a certain set of linker arguments.
+This might cause problems if your ViennaRNA configuration is unusual.
+If possible, prefer using `pkg-config`.
 
 Afterwards the crate can be used as a dependency in `Cargo.toml`:
 
