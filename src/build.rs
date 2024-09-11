@@ -20,52 +20,56 @@ impl bindgen::callbacks::ParseCallbacks for IgnoreMacros {
 }
 
 fn main() {
-    let mut includes: Vec<PathBuf> = vec![];
+    println!("cargo:rerun-if-changed=src/wrapper.h");
+    println!("cargo:rerun-if-env-changed=LIBRNA_LIB_DIR");
+    println!("cargo:rerun-if-env-changed=LIBRNA_INCLUDE_DIR");
 
-    if !configure_pkg_config() {
-        let mut include_path = PathBuf::from(env::var("LIBRNA_INCLUDE_DIR").unwrap_or_else(|e| {
-            println!(
-                "cargo:warning={}. Using default {}={}",
-                e, "LIBRNA_INCLUDE_DIR", "/usr/include"
-            );
-            String::from("/usr/include")
-        }))
-        .canonicalize()
-        .expect("cannot canonicalize path");
+    let includes = match try_pkg_config() {
+        Some(includes) => includes,
+        None => {
+            let mut includes: Vec<PathBuf> = vec![];
+            let mut include_path =
+                PathBuf::from(env::var("LIBRNA_INCLUDE_DIR").unwrap_or_else(|e| {
+                    println!(
+                        "cargo:warning={}. Using default LIBRNA_INCLUDE_DIR=/usr/include",
+                        e
+                    );
+                    String::from("/usr/include")
+                }))
+                .canonicalize()
+                .expect("cannot canonicalize path");
 
-        includes.push(include_path.clone());
-        include_path.push("ViennaRNA");
-        includes.push(include_path);
+            includes.push(include_path.clone());
+            include_path.push("ViennaRNA");
+            includes.push(include_path);
 
-        for include in &includes {
-            // metadata for directly depending crates
-            println!("cargo:include={}", include.display());
+            let lib_path = PathBuf::from(env::var("LIBRNA_LIB_DIR").unwrap_or_else(|e| {
+                println!("cargo:warning={}. Using default LIBRNA_LIB_DIR=/usr/lib", e);
+                String::from("/usr/lib")
+            }))
+            .canonicalize()
+            .expect("cannot canonicalize path");
+
+            if lib_path.join("libRNA.a").exists() {
+                println!("cargo:rustc-link-search=native={}", lib_path.display());
+            } else {
+                println!("cargo:warning=libRNA.a not found!");
+                println!("cargo:warning=Fallback mode for locally building libRNA.a is not yet implemented.");
+            }
+
+            const LIBS: &[&str] = &["static=RNA", "stdc++", "gsl", "mpfr", "gomp", "gmp"];
+
+            for lib in LIBS {
+                println!("cargo:rustc-link-lib={}", lib);
+            }
+
+            includes
         }
+    };
 
-        let lib_path = PathBuf::from(env::var("LIBRNA_LIB_DIR").unwrap_or_else(|e| {
-            println!(
-                "cargo:warning={}. Using default {}={}",
-                e, "LIBRNA_LIB_DIR", "/usr/lib"
-            );
-            String::from("/usr/lib")
-        }))
-        .canonicalize()
-        .expect("cannot canonicalize path");
-
-        if lib_path.join("libRNA.a").exists() {
-            println!("cargo:rustc-link-search=native={}", lib_path.display());
-        } else {
-            println!("cargo:warning=libRNA.a not found!");
-            println!(
-                "cargo:warning=Fallback mode for locally building libRNA.a is not yet implemented."
-            );
-        }
-
-        const LIBS: &[&str] = &["static=RNA", "stdc++", "gsl", "mpfr", "gomp", "gmp"];
-
-        for lib in LIBS {
-            println!("cargo:rustc-link-lib={}", lib);
-        }
+    // metadata for directly depending crates
+    for include in &includes {
+        println!("cargo:include={}", include.display());
     }
 
     let ignored_macros = IgnoreMacros(
@@ -79,10 +83,6 @@ fn main() {
         .into_iter()
         .collect(),
     );
-
-    println!("cargo:rerun-if-changed=src/wrapper.h");
-    println!("cargo:rerun-if-env-changed=LIBRNA_LIB_DIR");
-    println!("cargo:rerun-if-env-changed=LIBRNA_INCLUDE_DIR");
 
     let bindings = bindgen::Builder::default()
         .header("src/wrapper.h")
@@ -102,30 +102,23 @@ fn main() {
 }
 
 #[cfg(feature = "auto")]
-fn configure_pkg_config() -> bool {
+fn try_pkg_config() -> Option<Vec<PathBuf>> {
     match pkg_config::Config::new()
         .atleast_version("2.7.0")
         .statik(true)
         .probe("RNAlib2")
     {
-        Ok(info) => {
-            // metadata for directly depending crates
-            for path in info.include_paths {
-                println!("cargo:include={}", path.display());
-            }
-
-            true
-        }
+        Ok(info) => Some(info.include_paths),
         Err(err) => {
             println!("cargo:warning=pkg_config failed ({}).", err);
             println!("cargo:warning=Consider setting LIBRNA_INCLUDE_DIR/LIBRNA_LIB_DIR instead.");
 
-            false
+            None
         }
     }
 }
 
 #[cfg(not(feature = "auto"))]
-fn configure_pkg_config() -> bool {
-    false
+fn try_pkg_config() -> Option<Vec<PathBuf>> {
+    None
 }
