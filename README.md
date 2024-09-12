@@ -19,7 +19,7 @@ This crate was only tested on Linux. MacOS might work, possibly with some adjust
 | `0.1.6-0.1.7` | `<=2.6.0` | see above |
 | `0.2.0` | `2.6.0 - 2.6.2` | Added new header files introduced since 2.4.18 through 2.6.0 |
 | `0.2.1` | `>=2.6.3` | Removed workaround for issue fixed in [#189](https://github.com/ViennaRNA/ViennaRNA/pull/189). |
-| `>=0.2.2` | `>=2.6.4` | Re-added `vrna_config.h` which was removed in `0.2.1` as a workaround for an issue fixed in [#199](https://github.com/ViennaRNA/ViennaRNA/pull/199) |
+| `0.2.2-0.2.3` | `>=2.6.4` | Re-added `vrna_config.h` which was removed in `0.2.1` as a workaround for an issue fixed in [#199](https://github.com/ViennaRNA/ViennaRNA/pull/199) |
 | `>=0.3.0` | **`>=2.5.0`** | Issue [#3](https://github.com/fncnt/librna-sys/issues/3) should be resolved. Added new header files for `2.7.0` |
 
 This chart might be inconsinstent and incomplete. Please report any inaccuracies.
