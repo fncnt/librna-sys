@@ -1,3 +1,4 @@
+#include <ViennaRNA/vrna_config.h>
 #include <ViennaRNA/2Dfold.h>
 #include <ViennaRNA/2Dpfold.h>
 #include <ViennaRNA/alifold.h>
@@ -35,7 +36,9 @@
 #include <ViennaRNA/io/file_formats.h>
 #include <ViennaRNA/io/file_formats_msa.h>
 #include <ViennaRNA/io/utils.h>
-#include <ViennaRNA/json.h>
+#ifdef VRNA_WITH_JSON_SUPPORT
+# include <ViennaRNA/json.h>
+#endif
 #include <ViennaRNA/landscape/findpath.h>
 #include <ViennaRNA/landscape/move.h>
 #include <ViennaRNA/landscape/neighbor.h>
@@ -85,7 +88,10 @@
 #include <ViennaRNA/stringdist.h>
 #include <ViennaRNA/structured_domains.h>
 #include <ViennaRNA/subopt.h>
+#ifdef VRNA_WITH_SVM
 #include <ViennaRNA/svm.h>
+#include <ViennaRNA/utils/svm.h>
+#endif
 #include <ViennaRNA/treedist.h>
 #include <ViennaRNA/unstructured_domains.h>
 #include <ViennaRNA/utils/alignments.h>
@@ -94,9 +100,7 @@
 #include <ViennaRNA/utils/higher_order_functions.h>
 #include <ViennaRNA/utils/strings.h>
 #include <ViennaRNA/utils/structures.h>
-#include <ViennaRNA/utils/svm.h>
 #include <ViennaRNA/utils/units.h>
-#include <ViennaRNA/vrna_config.h>
 #include <ViennaRNA/zscore.h>
 // new since 2.4.18:
 #include <ViennaRNA/pk_plex.h>
