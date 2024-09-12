@@ -11,7 +11,7 @@ license = "MIT"
 description = "Low-level bindings for the ViennaRNA library."
 keywords = ["viennarna", "rna", "bioinformatics", "sys", "ffi"]
 categories = ["external-ffi-bindings", "science"]
-version = "0.2.3"
+version = "0.3.0-pre.2"
 edition = "2018"
 
 [lib]
@@ -19,19 +19,18 @@ doctest = false
 crate-type = ["lib"]
 
 [build-dependencies]
-bindgen = "~0.64"
-pkg-config = { optional = true, version = "~0.3" }
+bindgen = "~0.70"
+pkg-config = { version = "~0.3", optional = true }
 
 [dependencies]
 
 [dev-dependencies]
 libc = "~0.2"
-pyo3 = { version = "~0.16", features = ["extension-module"] }
+pyo3 = { version = "~0.22", features = ["extension-module"] }
 
 [features]
 default = []
 auto = ["pkg-config"]
-
 
 [[example]]
 name = "bpdist"
