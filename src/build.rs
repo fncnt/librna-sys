@@ -104,7 +104,7 @@ fn main() {
 #[cfg(feature = "auto")]
 fn try_pkg_config() -> Option<Vec<PathBuf>> {
     match pkg_config::Config::new()
-        .atleast_version("2.7.0")
+        .atleast_version("2.5.0")
         .statik(true)
         .probe("RNAlib2")
     {

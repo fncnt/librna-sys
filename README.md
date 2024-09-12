@@ -20,11 +20,13 @@ This crate was only tested on Linux. MacOS might work, possibly with some adjust
 | `0.2.0` | `2.6.0 - 2.6.2` | Added new header files introduced since 2.4.18 through 2.6.0 |
 | `0.2.1` | `>=2.6.3` | Removed workaround for issue fixed in [#189](https://github.com/ViennaRNA/ViennaRNA/pull/189). |
 | `>=0.2.2` | `>=2.6.4` | Re-added `vrna_config.h` which was removed in `0.2.1` as a workaround for an issue fixed in [#199](https://github.com/ViennaRNA/ViennaRNA/pull/199) |
-| `>=0.3.0` | `>=2.7.0` | Issue [#3](https://github.com/fncnt/librna-sys/issues/3) should be resolved. Added new header files for `2.7.0` |
+| `>=0.3.0` | **`>=2.5.0`** | Issue [#3](https://github.com/fncnt/librna-sys/issues/3) should be resolved. Added new header files for `2.7.0` |
 
 This chart might be inconsinstent and incomplete. Please report any inaccuracies.
+Since `librna-sys@0.2.0`, new minor versions have been released in lockstep with new minor versions of ViennaRNA.
 In general, only the latest version of ViennaRNA is supported but please reach out if you try to make an older version work.
-Since `librna-sys@0.2.0`, new minor versions have been released in lockstep with new backwards-incompatible versions of ViennaRNA.
+
+**`librna-sys>=0.3.0` restores backwards-compatibility with ViennaRNA `>=2.5.0`** (cf. below for known issues).
 
 ## Prerequisites
 
@@ -124,4 +126,3 @@ ViennaRNA is linked against OpenMP both internally and in its bundled `libsvm` d
 **Prior to version `2.7.0`**, this could cause linking issues with the Rust compiler.
 
 This can be solved by adding [`openmp-sys`](https://crates.io/crates/openmp-sys) in downstream Rust code.
-However, this shouldn't be necessary with `librna-sys>=0.3` and ViennaRNA `>=2.7.0`.

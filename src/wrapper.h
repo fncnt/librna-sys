@@ -100,18 +100,33 @@
 #include <ViennaRNA/zscore.h>
 // new since 2.4.18:
 #include <ViennaRNA/pk_plex.h>
-// new since 2.5.0
-#include <ViennaRNA/pf_multifold.h>
-#include <ViennaRNA/subopt_zuker.h>
-#include <ViennaRNA/wrap_dlib.h>
-// new since 2.6.0
-#include <ViennaRNA/params/salt.h>
-#include <ViennaRNA/constraints/soft_special.h>
-#include <ViennaRNA/datastructures/array.h>
-#include <ViennaRNA/datastructures/string.h>
-#include <ViennaRNA/mconf.h>
-// new since 2.7.0
-#include <ViennaRNA/loops/gquad.h>
-#include <ViennaRNA/constraints/probing.h>
-#include <ViennaRNA/datastructures/sparse_mx.h>
-#include <ViennaRNA/utils/log.h>
+#if VRNA_VERSION_MAJOR >= 2 && VRNA_VERSION_MINOR >= 5 && VRNA_VERSION_PATCH >= 0
+# include <ViennaRNA/pf_multifold.h>
+# include <ViennaRNA/subopt_zuker.h>
+# include <ViennaRNA/wrap_dlib.h>
+#endif
+#if VRNA_VERSION_MAJOR >= 2 && VRNA_VERSION_MINOR >= 6 && VRNA_VERSION_PATCH >= 0
+# include <ViennaRNA/params/salt.h>
+# include <ViennaRNA/constraints/soft_special.h>
+# include <ViennaRNA/datastructures/array.h>
+# include <ViennaRNA/datastructures/string.h>
+# include <ViennaRNA/mconf.h>
+#endif
+#if VRNA_VERSION_MAJOR >= 2 && VRNA_VERSION_MINOR >= 7 && VRNA_VERSION_PATCH >= 0
+# include <ViennaRNA/loops/gquad.h>
+# include <ViennaRNA/constraints/probing.h>
+# include <ViennaRNA/datastructures/sparse_mx.h>
+# include <ViennaRNA/utils/log.h>
+#endif
+// `vrna_config.h` provides version macros which allows us to include
+// version-specific header files.
+//
+// Alternatives to this approach would be `-idirafter`
+// cf. https://gcc.gnu.org/onlinedocs/gcc/Directory-Options.html
+//
+// or `__has_include`
+// cf. https://gcc.gnu.org/onlinedocs/cpp/_005f_005fhas_005finclude.html
+//
+// Both of which would require some slightly ugly tricks (adjusting clang_args,
+// splitting `wrapper.h`, providing header stubs, version-specific cargo features, etc.)
+
