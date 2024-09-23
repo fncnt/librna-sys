@@ -29,8 +29,8 @@ libc = "~0.2"
 pyo3 = { version = "~0.22", features = ["extension-module"] }
 
 [features]
-default = []
-auto = ["pkg-config"]
+default = ["auto"]
+auto = ["dep:pkg-config"]
 
 [[example]]
 name = "bpdist"

@@ -37,16 +37,16 @@ This crate requires the static library (`libRNA.a` on Linux and macOS) as well a
 
 ## Configuration
 
-### Using `pkg-config` (preferred method)
+### Using `pkg-config` (default method)
 
 If `pkg-config` is available on your system and ViennaRNA was installed properly
 
 ```toml
 [dependencies]
-librna-sys = { version = "0.3" , features = ["auto"] }
+librna-sys = "0.3"
 ```
 
-may be used to automatically set the correct linking options.
+suffices to automatically set the correct linking options.
 If ViennaRNA is installed into a custom prefix that `pkg-config` is *not* aware of,
 you can use environment variables to tell `pkg-config` where to look:
 
@@ -58,7 +58,8 @@ export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$LIBRNA_PREFIX/lib/pkgconfig"
 
 ### Using Environment Variables
 
-`librna-sys` exposes two environment variables in case `pkg-config` is not available or the `auto` feature is not enabled.
+`librna-sys` exposes two environment variables in case `pkg-config` is not available or 
+the default `auto` feature is [explicitly disabled](https://doc.rust-lang.org/cargo/reference/features.html#the-default-feature).
 Use them like this:
 
 ```sh
@@ -68,14 +69,7 @@ export LIBRNA_LIB_DIR=$LIBRNA_PREFIX/lib # default: /usr/lib
 
 However, note that this approach is limited and assumes a certain set of linker arguments.
 This might cause problems if your ViennaRNA configuration is unusual.
-If possible, prefer using `pkg-config`.
-
-Afterwards the crate can be used as a dependency in `Cargo.toml`:
-
-```toml
-[dependencies]
-librna-sys = "0.3"
-```
+If possible, prefer using `pkg-config` via the default cargo features.
 
 ## Usage
 
