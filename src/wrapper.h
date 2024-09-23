@@ -1,3 +1,8 @@
+// Note that we might have to define more macros of that sort if new versions remove headers again.
+// cf. https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
+#define VRNA_VERSION_GEQ(MAJOR, MINOR, PATCH) (VRNA_VERSION_MAJOR > MAJOR || \
+        (VRNA_VERSION_MAJOR == MAJOR && (VRNA_VERSION_MINOR > MINOR || \
+        (VRNA_VERSION_MINOR == MINOR && VRNA_VERSION_PATCH >= PATCH))))
 #include <ViennaRNA/vrna_config.h>
 #include <ViennaRNA/2Dfold.h>
 #include <ViennaRNA/2Dpfold.h>
@@ -104,19 +109,19 @@
 #include <ViennaRNA/zscore.h>
 // new since 2.4.18:
 #include <ViennaRNA/pk_plex.h>
-#if VRNA_VERSION_MAJOR >= 2 && VRNA_VERSION_MINOR >= 5 && VRNA_VERSION_PATCH >= 0
+#if VRNA_VERSION_GEQ(2,5,0)
 # include <ViennaRNA/pf_multifold.h>
 # include <ViennaRNA/subopt_zuker.h>
 # include <ViennaRNA/wrap_dlib.h>
 #endif
-#if VRNA_VERSION_MAJOR >= 2 && VRNA_VERSION_MINOR >= 6 && VRNA_VERSION_PATCH >= 0
+#if VRNA_VERSION_GEQ(2,6,0)
 # include <ViennaRNA/params/salt.h>
 # include <ViennaRNA/constraints/soft_special.h>
 # include <ViennaRNA/datastructures/array.h>
 # include <ViennaRNA/datastructures/string.h>
 # include <ViennaRNA/mconf.h>
 #endif
-#if VRNA_VERSION_MAJOR >= 2 && VRNA_VERSION_MINOR >= 7 && VRNA_VERSION_PATCH >= 0
+#if VRNA_VERSION_GEQ(2,7,0)
 # include <ViennaRNA/loops/gquad.h>
 # include <ViennaRNA/constraints/probing.h>
 # include <ViennaRNA/datastructures/sparse_mx.h>
@@ -134,3 +139,5 @@
 // Both of which would require some slightly ugly tricks (adjusting clang_args,
 // splitting `wrapper.h`, providing header stubs, version-specific cargo features, etc.)
 
+// We don't want to expose this macro in the bindings.
+#undef VRNA_VERSION_GEQ
