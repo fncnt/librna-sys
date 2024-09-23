@@ -89,8 +89,8 @@
 #include <ViennaRNA/structured_domains.h>
 #include <ViennaRNA/subopt.h>
 #ifdef VRNA_WITH_SVM
-#include <ViennaRNA/svm.h>
-#include <ViennaRNA/utils/svm.h>
+# include <ViennaRNA/svm.h>
+# include <ViennaRNA/utils/svm.h>
 #endif
 #include <ViennaRNA/treedist.h>
 #include <ViennaRNA/unstructured_domains.h>
