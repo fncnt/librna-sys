@@ -27,7 +27,7 @@ pkg-config = { version = "~0.3", optional = true }
 
 [dev-dependencies]
 libc = "~0.2"
-pyo3 = { version = "~0.22", features = ["extension-module"] }
+pyo3 = { version = "~0.24", features = [] }
 
 [features]
 default = ["auto"]
