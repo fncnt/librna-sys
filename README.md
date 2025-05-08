@@ -88,10 +88,13 @@ This example is intended to illustrate how `librna-sys` could be used to build u
 Building this example by running
 
 ```sh
-cargo build --release --example bpdist #--features auto
+cargo build --release --example bpdist --features pyo3/extension-module #auto
 ```
 
 produces a dynamic library `target/release/examples/libbpdist.so` exposing `Python` bindings.
+Using the 
+[`pyo3/extension-module` feature flag](https://pyo3.rs/main/faq.html#i-cant-run-cargo-test-or-i-cant-build-in-a-cargo-workspace-im-having-linker-issues-like-symbol-not-found-or-undefined-reference-to-_pyexc_systemerror) 
+is important here.
 Copy it wherever you want and import it like this:
 
 ```python
@@ -100,6 +103,13 @@ from libbpdist import bp_distance_pk
 structures = [".((..[[[..))..]]].", ".((.[.[[..))..]]]."]
 print(bp_distance_pk(structures[0], structures[1]))
 ```
+
+_NOTE:_ This is the same test case as in:
+
+```sh
+cargo test --example bpdist #--features auto
+```
+
 ## Contributions
 
 I'm open to any ideas or advice.
