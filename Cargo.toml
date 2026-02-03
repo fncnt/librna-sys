@@ -20,14 +20,14 @@ doctest = false
 crate-type = ["lib"]
 
 [build-dependencies]
-bindgen = "~0.70"
+bindgen = "~0.72"
 pkg-config = { version = "~0.3", optional = true }
 
 [dependencies]
 
 [dev-dependencies]
 libc = "~0.2"
-pyo3 = { version = "~0.24", features = [] }
+pyo3 = { version = "~0.28", features = [] }
 
 [features]
 default = ["auto"]
