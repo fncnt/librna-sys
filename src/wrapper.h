@@ -194,6 +194,16 @@
 #include <ViennaRNA/utils/log.h>
 #include <ViennaRNA/zscore/basic.h>
 #endif
+#if VRNA_VERSION_GEQ(2, 7, 1)
+#include <ViennaRNA/data/transform.h>
+#include <ViennaRNA/math/functions.h>
+#include <ViennaRNA/probing/strategy_deigan.h>
+#include <ViennaRNA/probing/strategy_eddy.h>
+#include <ViennaRNA/probing/strategy_zarringhalam.h>
+#endif
+#if VRNA_VERSION_GEQ(2, 7, 2)
+#include <ViennaRNA/probing/strategy_nlogp.h>
+#endif
 // `vrna_config.h` provides version macros which allows us to include
 // version-specific header files.
 //
