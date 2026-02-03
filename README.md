@@ -6,7 +6,7 @@ This crate provides low-level Rust bindings to [`libRNA/RNAlib/ViennaRNA`](https
 
 ## Current State
 
-`librna-sys` is mostly **experimental** and provides **unsafe low-level bindings**.
+`librna-sys` provides **unsafe low-level bindings**.
 You might encounter issues with building or linking this crate but common installation setups of ViennaRNA should work reliably.
 This crate was only tested on Linux. MacOS might work, possibly with some adjustments.
 
@@ -23,7 +23,6 @@ This crate was only tested on Linux. MacOS might work, possibly with some adjust
 | `>=0.3.0` | **`>=2.5.0`** | Issue [#3](https://github.com/fncnt/librna-sys/issues/3) should be resolved. Added new header files for `2.7.0` |
 
 This chart might be inconsinstent and incomplete. Please report any inaccuracies.
-Since `librna-sys@0.2.0`, new minor versions have been released in lockstep with new minor versions of ViennaRNA.
 In general, only the latest version of ViennaRNA is supported but please reach out if you try to make an older version work.
 
 **`librna-sys>=0.3.0` restores backwards-compatibility with ViennaRNA `>=2.5.0`** (cf. below for known issues).
