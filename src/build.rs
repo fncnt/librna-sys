@@ -54,7 +54,7 @@ fn main() {
                 println!("cargo:rustc-link-search=native={}", lib_path.display());
             } else {
                 println!("cargo:warning=libRNA.a not found!");
-                println!("cargo:warning=Fallback mode for locally building libRNA.a is not yet implemented.");
+                println!("cargo:warning=Fallback mode for local builds is not yet implemented.");
             }
 
             const LIBS: &[&str] = &["static=RNA", "stdc++", "gsl", "mpfr", "gomp", "gmp"];
@@ -85,6 +85,8 @@ fn main() {
     );
 
     let bindings = bindgen::Builder::default()
+        .rust_target(bindgen::RustTarget::stable(70, 0).unwrap_or_default())
+        .rust_edition(bindgen::RustEdition::Edition2021)
         .header("src/wrapper.h")
         .parse_callbacks(Box::new(ignored_macros))
         .merge_extern_blocks(true)
